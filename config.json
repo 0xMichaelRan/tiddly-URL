@@ -1,4 +1,4 @@
 {
   "key_secret":"",
-  "databaseAddr":"mysql+pymysql://root:Zhou1509@localhost/URL_Shortener"
+  "databaseAddr":"mysql+pymysql://root:cc@localhost/URL_Shortener"
 }
