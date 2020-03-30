@@ -1,0 +1,23 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+import ReadConfig
+
+db = SQLAlchemy()
+
+
+def create_app(config_name):
+    app = Flask(__name__)
+
+    config = ReadConfig.readconfig("/Users/zhoumeng/config.json")
+
+    app.secret_key = config['key_secret']
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = config["databaseAddr"]
+    app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+    from .main import main as blueprint_main
+    app.register_blueprint(blueprint_main)
+
+    db.init_app(app)
+    return app
