@@ -25,8 +25,14 @@
             </form>
             <div id="lengthen_result_div" style="width:25%;float:left;"></div>
         </section>
-        <section class="tab"></section>
-        <section class="tab"></section>
+        <section class="tab">
+            <div id="section3"></div>
+        </section>
+        <section class="tab">
+            <button onclick="generate_auth_token()">生成API密钥</button>
+            <button onclick="">查看API文档</button>
+            <div id="api_result_div"></div>
+        </section>
 
     </div>
     <script>
@@ -54,7 +60,67 @@
             }
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/get_statistical_data/", //请求地址
+                type: "GET",       //请求类型
+                success: function (data) {
+                    var s = document.createElement("table");
+                    s.setAttribute("class", "table table-bordered table-striped");
 
+                    var th = document.createElement("thead");
+
+                    var th1 = document.createElement("tr");
+                    var th2 = document.createElement("th");
+                    th2.innerHTML = "长链接";
+                    th1.append(th2);
+
+                    var th3 = document.createElement("th");
+                    th3.innerHTML = "短链接";
+                    th1.append(th3);
+
+                    var th4 = document.createElement("th");
+                    th4.innerHTML = "访问次数";
+                    th1.append(th4);
+
+                    var th5 = document.createElement("th");
+                    th5.innerHTML = "IP数";
+                    th1.append(th5);
+
+                    th.append(th1);
+                    s.append(th);
+                    var tbod = document.createElement("tbody");
+                    $.each(data, function (index, obj) {
+                        var tr = document.createElement('tr');
+
+                        var tb_th = document.createElement('th');
+                        tb_th.innerHTML = obj.long;
+                        tr.append(tb_th);
+
+                        var sch_th = document.createElement('th');
+                        sch_th.innerHTML = obj.short;
+                        tr.append(sch_th);
+
+                        var shop_th = document.createElement('th');
+                        shop_th.innerHTML = obj.visits;
+                        tr.append(shop_th);
+
+                        var last_th = document.createElement('th');
+                        last_th.innerHTML = obj.ipcounts;
+                        tr.append(last_th);
+                        tbod.append(tr);
+                        s.append(tbod)
+                    })
+                    $('#section3').empty();
+                    $('#section3').append(s);
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            })
+        });
+    </script>
     <script>
         function lengthen_url() {  //获取到按钮的点击事件
 
@@ -103,6 +169,26 @@
 
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            })
+        }
+    </script>
+    <script>
+        function generate_auth_token() {
+            $.ajax({
+                url: "/generate_auth_token/", //请求地址
+                type: "GET",       //请求类型
+                success: function (data) {
+                    var s = document.createElement("div");
+                    var p = document.createElement("p");
+                    p.innerText = "API密钥: " + data.auth_token;
+                    s.append(p);
+                    $('#api_result_div').empty();
+                    $('#api_result_div').append(s);
+                    $('#api_result_div').append(s);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
                 }
             })
         }

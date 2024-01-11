@@ -41,8 +41,10 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if session.get('login') %}
                     <li><a>Hello,{{ session.get('username') }}</a></li>
-                    <li><a href="{{url_for('main.admin_logout')}}">注销</a></li>
+                    <li><a href="{{ url_for('main.admin_logout') }}">注销</a></li>
                 {% else %}
+                    <li><a href="{{ url_for('main.register') }}">注册</a></li>
+
                     <li><a href="{{ url_for('main.login') }}">登录</a></li>
                 {% endif %}
 

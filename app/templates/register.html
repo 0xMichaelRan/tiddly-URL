@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/login.css') }}">
+{% endblock %}
+{% block context %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+            <form class='form-login' action="/register/" method="post">
+
+                <h2 class="text-center">注册页面</h2>
+                <div class="form-group">
+                    <label for="id_username">用户名：</label>
+                    <input type="text" name='username' class="form-control" id="username" placeholder="Username"
+                           autofocus required>
+                </div>
+                <div class="form-group">
+                    <label for="id_password">密码：</label>
+                    <input type="password" name='password' class="form-control" id="password" placeholder="Password"
+                           required>
+                </div>
+
+                {# flash message #}
+                {% for message in get_flashed_messages() %}
+                    <div class="w3-panel w3-blue w3-display-container">
+                        <button type="button" class="w3-display-topright"
+                                onclick="this.parentElement.style.display='none'">&times;
+                        </button>
+                        <p class="w3-large">{{ message }}</p>
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary pull-right">提交</button>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 import ReadConfig
 
@@ -17,7 +18,10 @@ def create_app(config_name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
     from .main import main as blueprint_main
+    from .api import api as blueprint_api
+    app.register_blueprint(blueprint_api)
     app.register_blueprint(blueprint_main)
-
     db.init_app(app)
+    jwt = JWTManager(app)
+
     return app
