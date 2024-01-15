@@ -4,7 +4,7 @@ URL_Shortener提供了[生成短链接](#生成短链接接口) 与[还原短链
 
 使用前请了解如下事项：
 
-- 使用接口前需要在用户界面(http://129.204.185.247/)获取API密钥，默认有效期为一天。
+- 使用接口前需要在用户界面获取API密钥，默认有效期为一天。
 
 - API需添加在请求头中，具体信息查看请求示例。
 
@@ -69,7 +69,7 @@ http http://129.204.185.247/api/shorten/ Authorization:" Bearer eyJ0eXAiOiJKV1Qi
 
 ~~~
 
-###还原短链接接口
+### 还原短链接接口
 
 ##### 请求
 
@@ -93,7 +93,7 @@ URL：http://129.204.185.247/api/lengthen/
 }	
 ~~~
 
-###请求示例
+### 请求示例
 
 ~~~python
 http http://129.204.185.247/api/lengthen/ Authorization:" Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODU2NjA0NjgsIm5iZiI6MTU4NTY2MDQ2OCwianRpIjoiYmE4YTJjMDMtNjBmOS00NzIxLWFjZmMtZmM2MWU5ZTRiYzI1IiwiZXhwIjoxNTg1NjYxMzY4LCJpZGVudGl0eSI6MSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.21oYWLZ9GgueJeCIzc9yUYgGjMCBgx7KKatpfIK-heo" long_url="https://www.baidu.com"
