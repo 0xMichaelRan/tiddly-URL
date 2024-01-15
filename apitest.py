@@ -5,7 +5,7 @@ import os
 #command curl -i -X POST -H "Content-Type: application/json" -d '{"username":"ok","password":"python"}'
 if __name__ == '__main__':
     str_raw = 'long_url=https://www.zhihu.com/'
-    for i in range(1000 ):
+    for i in range(100):
         str_temp = str_raw + str(i)
         command = 'curl localhost/shorten/ -X POST -d {}'.format(str_temp)
         os.system(command)

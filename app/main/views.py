@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from flask import request, jsonify, abort, redirect, render_template, session, url_for, flash, g
-import ReadConfig
 from .. import db
 from . import main
 from .. import models
@@ -10,7 +9,7 @@ from flask_jwt_extended import create_access_token
 
 from ..decorators import login_required, visit_count
 
-config = ReadConfig.readconfig("/Users/zhoumeng/config.json")
+config = models.config
 BASE_URL = config['BASEURL']
 
 
@@ -74,7 +73,7 @@ def shorten():
     user_id = session['user_id']
     jsondata = {}
 
-    url = models.URLS.query.filter_by(LongURL=long_url).first()
+    url = models.URLS.query.filter_by(LongURL=long_url, user_id=user_id).first()
     if url is not None:
         jsondata['long'] = url.LongURL
         jsondata['short'] = url.ShortURL
@@ -102,7 +101,7 @@ def shorten():
 
 @main.route('/lengthen/', methods=['POST'])
 def lengthen():
-    location = request.form['location']
+    location = request.form['location'].strip()
     url = models.URLS.query.filter_by(Location=location).first()
     jsondata = {}
 
@@ -156,7 +155,7 @@ def generate_auth_token():
     user_id = session['user_id']
     jsondata = {}
     user = models.USERS.query.get(user_id)
-    expires_time = timedelta(weeks=0, days=0, hours=1, minutes=0, seconds=0, milliseconds=0, microseconds=0, )
+    expires_time = timedelta(weeks=0, days=1, hours=0, minutes=0, seconds=0, milliseconds=0, microseconds=0, )
     access_token = create_access_token(identity=user_id, expires_delta=expires_time)
 
     jsondata['auth_token'] = access_token

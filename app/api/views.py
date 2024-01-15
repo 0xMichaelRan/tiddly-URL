@@ -14,9 +14,13 @@ def shorten():
 
     url = models.URLS.query.filter_by(LongURL=long_url).first()
     if url is not None:
-        jsondata['long'] = url.LongURL
-        jsondata['short'] = url.ShortURL
-        jsondata['location'] = url.Location
+        data = {}
+        data['long'] = url.LongURL
+        data['short'] = url.ShortURL
+        data['location'] = url.Location
+        jsondata['msg'] = '请求成功'
+        jsondata['code'] = 0
+        jsondata['data'] = data
 
     else:
         url = models.URLS(LongURL=long_url)
@@ -28,9 +32,13 @@ def shorten():
 
         url.ShortURL = short_url
         url.Location = BASE_URL + short_url
-        jsondata['long'] = url.LongURL
-        jsondata['short'] = url.ShortURL
-        jsondata['location'] = url.Location
+        data = {}
+        data['long'] = url.LongURL
+        data['short'] = url.ShortURL
+        data['location'] = url.Location
+        jsondata['msg'] = '请求成功'
+        jsondata['code'] = 0
+        jsondata['data'] = data
 
         db.session.commit()
 
@@ -49,6 +57,7 @@ def lengenth():
         id = a.decode(url.ShortURL)
         url = models.URLS.query.get(id)
         jsondata['long'] = url.LongURL
+        jsondata['msg']='请求成功'
     else:
-        jsondata['status'] = 'NO This Short_url'
+        jsondata['msg'] = '不存在当前短链接'
     return jsonify(jsondata)

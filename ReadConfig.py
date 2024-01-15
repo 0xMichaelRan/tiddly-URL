@@ -9,7 +9,7 @@ def readconfig(path):
         for i in config:
             data = data+i
         jsondata = json.loads(data)
-        return  jsondata
+        return jsondata
 
     except Exception as e:
         print(e)
