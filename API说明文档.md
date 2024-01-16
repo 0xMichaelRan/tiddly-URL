@@ -24,7 +24,7 @@ URL：http://129.204.185.247/api/shorten/
 | -------- | ------ | -------- | -------------------: |
 | long_url | string | 是       | 需要进行缩短的长网址 |
 
-###请求POST数据示例
+### 请求POST数据示例
 
 ~~~JSON
 {
@@ -32,7 +32,7 @@ URL：http://129.204.185.247/api/shorten/
 }	
 ~~~
 
-###请求示例
+### 请求示例
 
 ~~~python
 http http://129.204.185.247/api/shorten/ Authorization:" Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODU2NjA0NjgsIm5iZiI6MTU4NTY2MDQ2OCwianRpIjoiYmE4YTJjMDMtNjBmOS00NzIxLWFjZmMtZmM2MWU5ZTRiYzI1IiwiZXhwIjoxNTg1NjYxMzY4LCJpZGVudGl0eSI6MSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.21oYWLZ9GgueJeCIzc9yUYgGjMCBgx7KKatpfIK-heo" long_url="https://www.baidu.com"
