@@ -1,6 +1,6 @@
-# URL_Shortner
+# tinyURL
 
-URL_Shorter是以flask为基础实现的一个http短链接服务。该项目提高了短链接生成和还原、短链接访问统计、API服务、用户鉴权这几项功能。
+tinyURL是以flask为基础实现的一个http短链接服务。该项目提高了短链接生成和还原、短链接访问统计、API服务、用户鉴权这几项功能。
 
 ## 导航
 
