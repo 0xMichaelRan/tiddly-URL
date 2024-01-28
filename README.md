@@ -50,10 +50,7 @@ pip3 install -r ruquirements.txt
 
 ~~~shell
 vim config.json #自行修改配置信息
-EXPORT FLASK_APP=manage.py 
-flask init_db #初始化数据库
+export FLASK_APP=manage.py 
+flask init-db #初始化数据库
 python3 manage.py #项目启动
 ~~~
-
-
-

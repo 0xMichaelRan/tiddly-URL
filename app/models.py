@@ -2,7 +2,7 @@ from itsdangerous import Serializer, SignatureExpired, BadSignature
 import ReadConfig
 from . import db
 from passlib.apps import custom_app_context as pwd_context
-config = ReadConfig.readconfig("/Users/zhoumeng/config.json")
+config = ReadConfig.readconfig("./local_config.json")
 
 urls_ips = db.Table('urls_ips',
                     db.Column('url_id', db.BIGINT, db.ForeignKey('URLS.id'), primary_key=True),
