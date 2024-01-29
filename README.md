@@ -1,6 +1,8 @@
-# tinyURL
+# tiddlyURL
 
-tinyURL是以flask为基础实现的一个http短链接服务。该项目提供了短链接生成和还原、短链接访问统计、API服务、用户鉴权这几项功能。
+tiddlyURL是以flask为基础实现的一个http短链接服务。
+
+该项目提供了短链接生成和还原、短链接访问统计、API服务、用户鉴权这几项功能。
 
 ## 导航
 
@@ -32,18 +34,18 @@ tinyURL是以flask为基础实现的一个http短链接服务。该项目提供�
 
 ### 数据库架构
 
-![pic](https://github.com/zstone12/URL_Shortener/blob/master/app/static/db_pic.png)
+![pic](https://github.com/0xMichaelRan/tiddly-URL/blob/master/app/static/db_pic.png)
 
 ## 项目框架
 
 麻雀虽小五脏俱全，本项目框架简单关系如下图:
 
-![pic2](https://github.com/zstone12/URL_Shortener/blob/master/app/static/arr_pic.jpg)
+![pic2](https://github.com/0xMichaelRan/tiddly-URL/blob/master/app/static/arr_pic.jpg)
 
 ## 安装
 
 ~~~shell
-pip3 install -r ruquirements.txt
+pip install -r ruquirements.txt
 ~~~
 
 ## 使用
@@ -52,5 +54,5 @@ pip3 install -r ruquirements.txt
 vim config.json #自行修改配置信息
 export FLASK_APP=manage.py 
 flask init-db #初始化数据库
-python3 manage.py #项目启动
+python manage.py #项目启动
 ~~~
