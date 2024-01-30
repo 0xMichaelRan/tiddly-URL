@@ -53,6 +53,6 @@ pip install -r ruquirements.txt
 ~~~shell
 vim config.json #自行修改配置信息
 export FLASK_APP=manage.py 
-flask init-db #初始化数据库
+flask init-mysql-db #初始化数据库
 python manage.py #项目启动
 ~~~

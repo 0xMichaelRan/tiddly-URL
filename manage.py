@@ -10,7 +10,7 @@ migrate = Migrate(app, db)
 
 
 @app.cli.command()
-def init_db():
+def init_mysql_db():
     current_app.logger.info("Database initilize begin...")
     db.drop_all()
     db.create_all()
