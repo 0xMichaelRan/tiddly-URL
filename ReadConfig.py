@@ -4,10 +4,10 @@ import os
 
 def readconfig(path):
     try:
-        config =  open(path,'r')
+        config = open(path, "r")
         data = ""
         for i in config:
-            data = data+i
+            data = data + i
         jsondata = json.loads(data)
         return jsondata
 
@@ -15,7 +15,5 @@ def readconfig(path):
         print(e)
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     readconfig("./config.json")
