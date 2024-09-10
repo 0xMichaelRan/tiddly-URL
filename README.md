@@ -45,7 +45,7 @@ tiddlyURL是以flask为基础实现的一个http短链接服务。
 ## 安装
 
 ~~~shell
-pip install -r ruquirements.txt
+pip install -r requirements.txt
 ~~~
 
 ## 使用
