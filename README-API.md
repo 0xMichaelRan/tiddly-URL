@@ -1,15 +1,19 @@
 Here is the raw Markdown file content:
 
-### Usage Instructions
+### API Instruction
 
-URL_Shortener provides two interfaces: [Generate Short Link](#generate-short-link-interface) and [Restore Short Link](#restore-short-link-interface).
+Two interfaces: 
 
-Before using the interface, please note the following:
+1. [Generate a Short-Link](#generate-short-link-interface)
+1. [Resolve a Short-Link](#restore-short-link-interface).
 
-- Before using the interface, you need to obtain the API key in the user interface, which is valid for one day by default.
-- The API key needs to be added to the request header. Please refer to the request example for specific usage.
+Note the following:
 
-### Generate Short Link Interface
+- Before using the API, obtain API key in the UI, which is valid for 1 day (by default).
+
+- Add the API key to the request header. Please refer to examples below.
+
+## Generate Short Link Interface
 
 ##### Request
 
