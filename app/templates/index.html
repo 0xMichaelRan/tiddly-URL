@@ -1,258 +1,257 @@
 {% extends 'base.html' %}
 {% block css %} {% endblock %}
 {% block context %}
-    <ul class="nav nav-pills " id="nav">
-        <li role="presentation" class="act active"><a href="#">创建短链</a></li>
-        <li role="presentation"><a href="#">还原短链</a></li>
-        <li role="presentation"><a href="#">查看统计信息</a></li>
-        <li role="presentation"><a href="#">开放API权限</a></li>
-    </ul>
-    <div id="container">
-        <section class="tab">
-            <div class="form-group">
-                <form action="#" id="shorten_form" onsubmit='return false'>
-                    <input type="text" placeholder="请输入http:// 或 https:// 开头的链接" name="long_url" style="width:500px">
-                    <button class="btn btn-primary" onclick="shorten_url()"> 缩短网址</button>
-                </form>
-                <div id="shorten_result_div" style="width:25%;float:left;">
-                </div>
-            </div>
-        </section>
-        <section class="tab">
-            <form action="#" id="lengthen_form" onsubmit='return false'>
-                <input type="text" placeholder="请输入短网址" name="location">
-                <button onclick="lengthen_url()">还原网址</button>
+<ul class="nav nav-pills " id="nav">
+    <li role="presentation" class="act active"><a href="#">创建短链</a></li>
+    <li role="presentation"><a href="#">还原短链</a></li>
+    <li role="presentation"><a href="#">查看统计信息</a></li>
+    <li role="presentation"><a href="#">开放API权限</a></li>
+</ul>
+<div id="container">
+    <section class="tab">
+        <div class="form-group">
+            <form action="#" id="shorten_form" onsubmit='return false'>
+                <input type="text" placeholder="请输入http:// 或 https:// 开头的链接" name="long_url" style="width:500px">
+                <button class="btn btn-primary" onclick="shorten_url()"> 缩短网址</button>
             </form>
-            <div id="lengthen_result_div" style="width:25%;float:left;"></div>
-        </section>
-        <section class="tab">
-            <button onclick="refresh_data()">刷新数据</button>
-            <div id="section3"></div>
-        </section>
-        <section class="tab">
-            <button onclick="generate_auth_token()">生成API密钥</button>
-            <a href="https://github.com/0xMichaelRan/tiddly-URL/blob/master/API%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.md">查看API说明文档</a>
-            <div id="api_result_div" style="white-space:normal; width:200px; "></div>
-        </section>
+            <div id="shorten_result_div" style="width:25%;float:left;">
+            </div>
+        </div>
+    </section>
+    <section class="tab">
+        <form action="#" id="lengthen_form" onsubmit='return false'>
+            <input type="text" placeholder="请输入短网址" name="location">
+            <button onclick="lengthen_url()">还原网址</button>
+        </form>
+        <div id="lengthen_result_div" style="width:25%;float:left;"></div>
+    </section>
+    <section class="tab">
+        <button onclick="refresh_data()">刷新数据</button>
+        <div id="section3"></div>
+    </section>
+    <section class="tab">
+        <button onclick="generate_auth_token()">生成API密钥</button>
+        <a
+            href="https://github.com/0xMichaelRan/tiddly-URL/blob/master/API%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.md">查看API说明文档</a>
+        <div id="api_result_div" style="white-space:normal; width:200px; "></div>
+    </section>
 
-    </div>
-    <script>
-        window.onload = function () {
-            var nav = document.getElementById('nav');
-            var oNav = nav.getElementsByTagName('li');
+</div>
+<script>
+    window.onload = function () {
+        var nav = document.getElementById('nav');
+        var oNav = nav.getElementsByTagName('li');
 
-            var container = document.getElementById('container');
-            var oDiv = container.getElementsByClassName('tab');
+        var container = document.getElementById('container');
+        var oDiv = container.getElementsByClassName('tab');
 
-            for (let i = 0; i < oNav.length; i++) {
-                oNav[i].index = i;
-                oNav[i].onclick = function () {
-                    for (let i = 0; i < oNav.length; i++) {
-                        oNav[i].className = '';
-                        oDiv[i].style.display = "none";
-                    }
-                    this.className = 'act active';
-                    oDiv[this.index].style.display = "block" //显示
+        for (let i = 0; i < oNav.length; i++) {
+            oNav[i].index = i;
+            oNav[i].onclick = function () {
+                for (let i = 0; i < oNav.length; i++) {
+                    oNav[i].className = '';
+                    oDiv[i].style.display = "none";
                 }
-                for (let m = 1; m < oNav.length; m++) {
-                    oNav[m].className = '';
-                    oDiv[m].style.display = "none"; //不会被显示
-                }
+                this.className = 'act active';
+                oDiv[this.index].style.display = "block" //显示
+            }
+            for (let m = 1; m < oNav.length; m++) {
+                oNav[m].className = '';
+                oDiv[m].style.display = "none"; //不会被显示
             }
         }
-    </script>
-    <script>
-        function refresh_data() {
-            $.ajax({
-                url: "/get_statistical_data/", //请求地址
-                type: "GET",       //请求类型
-                success: function (data) {
-                    var s = document.createElement("table");
-                    s.setAttribute("class", "table table-bordered table-striped");
+    }
+</script>
+<script>
+    function refresh_data() {
+        $.ajax({
+            url: "/get_statistical_data/", //请求地址
+            type: "GET",       //请求类型
+            success: function (data) {
+                var s = document.createElement("table");
+                s.setAttribute("class", "table table-bordered table-striped");
 
-                    var th = document.createElement("thead");
+                var th = document.createElement("thead");
 
-                    var th1 = document.createElement("tr");
-                    var th2 = document.createElement("th");
-                    th2.innerHTML = "长链接";
-                    th1.append(th2);
+                var th1 = document.createElement("tr");
+                var th2 = document.createElement("th");
+                th2.innerHTML = "长链接";
+                th1.append(th2);
 
-                    var th3 = document.createElement("th");
-                    th3.innerHTML = "短链接";
-                    th1.append(th3);
+                var th3 = document.createElement("th");
+                th3.innerHTML = "短链接";
+                th1.append(th3);
 
-                    var th4 = document.createElement("th");
-                    th4.innerHTML = "访问次数";
-                    th1.append(th4);
+                var th4 = document.createElement("th");
+                th4.innerHTML = "访问次数";
+                th1.append(th4);
 
-                    var th5 = document.createElement("th");
-                    th5.innerHTML = "IP数";
-                    th1.append(th5);
+                var th5 = document.createElement("th");
+                th5.innerHTML = "IP数";
+                th1.append(th5);
 
-                    th.append(th1);
-                    s.append(th);
-                    var tbod = document.createElement("tbody");
-                    $.each(data, function (index, obj) {
-                        var tr = document.createElement('tr');
+                th.append(th1);
+                s.append(th);
+                var tbod = document.createElement("tbody");
+                $.each(data, function (index, obj) {
+                    var tr = document.createElement('tr');
 
-                        var tb_th = document.createElement('th');
-                        tb_th.innerHTML = obj.long;
-                        tr.append(tb_th);
+                    var tb_th = document.createElement('th');
+                    tb_th.innerHTML = obj.long;
+                    tr.append(tb_th);
 
-                        var sch_th = document.createElement('th');
-                        sch_th.innerHTML = '<a href="' + obj.short + '" target="_blank">' + obj.short + '</a>';
-                        tr.append(sch_th);
+                    var sch_th = document.createElement('th');
+                    sch_th.innerHTML = '<a href="' + obj.short + '" target="_blank">' + obj.short + '</a>';
+                    tr.append(sch_th);
 
-                        var shop_th = document.createElement('th');
-                        shop_th.innerHTML = obj.visits;
-                        tr.append(shop_th);
+                    var shop_th = document.createElement('th');
+                    shop_th.innerHTML = obj.visits;
+                    tr.append(shop_th);
 
-                        var last_th = document.createElement('th');
-                        last_th.innerHTML = obj.ipcounts;
-                        tr.append(last_th);
-                        tbod.append(tr);
-                        s.append(tbod)
-                    })
-                    $('#section3').empty();
-                    $('#section3').append(s);
+                    var last_th = document.createElement('th');
+                    last_th.innerHTML = obj.ipcounts;
+                    tr.append(last_th);
+                    tbod.append(tr);
+                    s.append(tbod)
+                })
+                $('#section3').empty();
+                $('#section3').append(s);
 
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                }
-            })
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: "/get_statistical_data/", //请求地址
-                type: "GET",       //请求类型
-                success: function (data) {
-                    var s = document.createElement("table");
-                    s.setAttribute("class", "table table-bordered table-striped");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        })
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/get_statistical_data/", //请求地址
+            type: "GET",       //请求类型
+            success: function (data) {
+                var s = document.createElement("table");
+                s.setAttribute("class", "table table-bordered table-striped");
 
-                    var th = document.createElement("thead");
+                var th = document.createElement("thead");
 
-                    var th1 = document.createElement("tr");
-                    var th2 = document.createElement("th");
-                    th2.innerHTML = "长链接";
-                    th1.append(th2);
+                var th1 = document.createElement("tr");
+                var th2 = document.createElement("th");
+                th2.innerHTML = "长链接";
+                th1.append(th2);
 
-                    var th3 = document.createElement("th");
-                    th3.innerHTML = "短链接";
-                    th1.append(th3);
+                var th3 = document.createElement("th");
+                th3.innerHTML = "短链接";
+                th1.append(th3);
 
-                    var th4 = document.createElement("th");
-                    th4.innerHTML = "访问次数";
-                    th1.append(th4);
+                var th4 = document.createElement("th");
+                th4.innerHTML = "访问次数";
+                th1.append(th4);
 
-                    var th5 = document.createElement("th");
-                    th5.innerHTML = "IP数";
-                    th1.append(th5);
+                var th5 = document.createElement("th");
+                th5.innerHTML = "IP数";
+                th1.append(th5);
 
-                    th.append(th1);
-                    s.append(th);
-                    var tbod = document.createElement("tbody");
-                    $.each(data, function (index, obj) {
-                        var tr = document.createElement('tr');
+                th.append(th1);
+                s.append(th);
+                var tbod = document.createElement("tbody");
+                $.each(data, function (index, obj) {
+                    var tr = document.createElement('tr');
 
-                        var tb_th = document.createElement('th');
-                        tb_th.innerHTML = obj.long;
-                        tr.append(tb_th);
+                    var tb_th = document.createElement('th');
+                    tb_th.innerHTML = obj.long;
+                    tr.append(tb_th);
 
-                        var sch_th = document.createElement('th');
-                        sch_th.innerHTML = '<a href="' + obj.short + '" target="_blank">' + obj.short + '</a>';
-                        tr.append(sch_th);
+                    var sch_th = document.createElement('th');
+                    sch_th.innerHTML = '<a href="' + obj.short + '" target="_blank">' + obj.short + '</a>';
+                    tr.append(sch_th);
 
-                        var shop_th = document.createElement('th');
-                        shop_th.innerHTML = obj.visits;
-                        tr.append(shop_th);
+                    var shop_th = document.createElement('th');
+                    shop_th.innerHTML = obj.visits;
+                    tr.append(shop_th);
 
-                        var last_th = document.createElement('th');
-                        last_th.innerHTML = obj.ipcounts;
-                        tr.append(last_th);
-                        tbod.append(tr);
-                        s.append(tbod)
-                    })
-                    $('#section3').empty();
-                    $('#section3').append(s);
+                    var last_th = document.createElement('th');
+                    last_th.innerHTML = obj.ipcounts;
+                    tr.append(last_th);
+                    tbod.append(tr);
+                    s.append(tbod)
+                })
+                $('#section3').empty();
+                $('#section3').append(s);
 
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                }
-            })
-        });
-    </script>
-    <script>
-        function lengthen_url() {  //获取到按钮的点击事件
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        })
+    });
+</script>
+<script>
+    function lengthen_url() {  //获取到按钮的点击事件
 
-            $.ajax({
-                url: "/lengthen/", //请求地址
-                type: "POST",       //请求类型
-                data: $('#lengthen_form').serialize(),
-                success: function (data) {
-                    var s = document.createElement("div");
-                    var p = document.createElement("p");
-                    if (data.status) {
-                        alert('您查询的短网址不存在');
-                    } else {
-                        p.innerText = "原网址: " + data.long;
-                        s.append(p);
-                        $('#lengthen_result_div').empty();
-                        $('#lengthen_result_div').append(s);
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                }
-            })
-        }
-    </script>
-    <script>
-        function shorten_url() {  //获取到按钮的点击事件
-            $.ajax({
-                url: "/shorten/", //请求地址
-                type: "POST",       //请求类型
-                data: $('#shorten_form').serialize(),
-                success: function (data) {
-                    {#var data1 = JSON.parse(data);#}
-                    var s = document.createElement("div");
-                    var p = document.createElement("p");
+        $.ajax({
+            url: "/lengthen/", //请求地址
+            type: "POST",       //请求类型
+            data: $('#lengthen_form').serialize(),
+            success: function (data) {
+                var s = document.createElement("div");
+                var p = document.createElement("p");
+                if (data.status) {
+                    alert('您查询的短网址不存在');
+                } else {
                     p.innerText = "原网址: " + data.long;
-
-                    var p2 = document.createElement("p");
-                    p2.innerText = "短网址: " + data.location;
-                    p2.setAttribute("id", "short");
-
-                    s.append(p2);
                     s.append(p);
-                    $('#shorten_result_div').empty();
-                    $('#shorten_result_div').append(s);
-
-
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#lengthen_result_div').empty();
+                    $('#lengthen_result_div').append(s);
                 }
-            })
-        }
-    </script>
-    <script>
-        function generate_auth_token() {
-            $.ajax({
-                url: "/generate_auth_token/", //请求地址
-                type: "GET",       //请求类型
-                success: function (data) {
-                    var s = document.createElement("div");
-                    var p = document.createElement("label");
-                    p.innerText = "API密钥: " + data.auth_token;
-                    s.append(p);
-                    $('#api_result_div').empty();
-                    $('#api_result_div').append(s);
-                    $('#api_result_div').append(s);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        })
+    }
+</script>
+<script>
+    function shorten_url() {  //获取到按钮的点击事件
+        $.ajax({
+            url: "/shorten/", //请求地址
+            type: "POST",       //请求类型
+            data: $('#shorten_form').serialize(),
+            success: function (data) {
+                { #var data1 = JSON.parse(data);# }
+                var s = document.createElement("div");
+                var p = document.createElement("p");
+                p.innerText = "原网址: " + data.long;
 
-                }
-            })
-        }
-    </script>
+                var p2 = document.createElement("p");
+                p2.innerText = "短网址: " + data.location;
+                p2.setAttribute("id", "short");
+
+                s.append(p2);
+                s.append(p);
+                $('#shorten_result_div').empty();
+                $('#shorten_result_div').append(s);
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        })
+    }
+</script>
+<script>
+    function generate_auth_token() {
+        $.ajax({
+            url: "/generate_auth_token/", //请求地址
+            type: "GET",       //请求类型
+            success: function (data) {
+                var s = document.createElement("div");
+                var p = document.createElement("label");
+                p.innerText = "API密钥: " + data.auth_token;
+                s.append(p);
+                $('#api_result_div').empty();
+                $('#api_result_div').append(s);
+                $('#api_result_div').append(s);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        })
+    }
+</script>
 {% endblock %}
